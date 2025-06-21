@@ -241,10 +241,17 @@
   }
 
   function renderTrackForms() {
-    const count = parseInt(trackCountInput.value, 10);
-    if (isNaN(count) || count < 1 || count > 30) {
-      tracksContainer.innerHTML = '';
-      return;
+    let count;
+    if (releaseType.value === 'Single') {
+      count = 1;
+      trackCountContainer.style.display = 'none';
+    } else {
+      count = parseInt(trackCountInput.value, 10);
+      trackCountContainer.style.display = 'block';
+      if (isNaN(count) || count < 1 || count > 30) {
+        tracksContainer.innerHTML = '';
+        return;
+      }
     }
     tracksContainer.innerHTML = '';
     for (let i = 0; i < count; i++) {
@@ -253,12 +260,11 @@
   }
 
   releaseType.addEventListener('change', () => {
-    if (releaseType.value === 'EP' || releaseType.value === 'Album') {
-      trackCountContainer.style.display = 'block';
+    if (releaseType.value === 'Single') {
       renderTrackForms();
     } else {
-      trackCountContainer.style.display = 'none';
-      tracksContainer.innerHTML = '';
+      trackCountContainer.style.display = 'block';
+      renderTrackForms();
     }
   });
 
@@ -267,10 +273,7 @@
   });
 
   // Initialize form for default selection
-  if (releaseType.value === 'EP' || releaseType.value === 'Album') {
-    trackCountContainer.style.display = 'block';
-    renderTrackForms();
-  }
+  renderTrackForms();
 
   // Store selection logic
   selectAllCheckbox.addEventListener('change', () => {
@@ -296,51 +299,52 @@
       return;
     }
 
-    // Validate tracks if EP or Album
+    // Validate tracks
     let trackData = [];
+    let count = 1;
     if (releaseTypeVal === 'EP' || releaseTypeVal === 'Album') {
-      const count = parseInt(trackCountInput.value, 10);
+      count = parseInt(trackCountInput.value, 10);
       if (isNaN(count) || count < 1 || count > 30) {
         status.style.color = 'red';
         status.textContent = 'Please enter a valid number of tracks (1-30).';
         return;
       }
-      for (let i = 0; i < count; i++) {
-        const titleInput = form[`trackTitle${i}`];
-        const producerInput = form[`producer${i}`];
-        const composerInput = form[`composer${i}`];
+    }
+    for (let i = 0; i < count; i++) {
+      const titleInput = form[`trackTitle${i}`];
+      const producerInput = form[`producer${i}`];
+      const composerInput = form[`composer${i}`];
 
-        if (!titleInput || !titleInput.value.trim()) {
-          status.style.color = 'red';
-          status.textContent = `Please enter title for track ${i + 1}.`;
-          return;
-        }
-        if (!producerInput || !producerInput.value.trim()) {
-          status.style.color = 'red';
-          status.textContent = `Please enter producer for track ${i + 1}.`;
-          return;
-        }
-        if (!composerInput || !composerInput.value.trim()) {
-          status.style.color = 'red';
-          status.textContent = `Please enter composer for track ${i + 1}.`;
-          return;
-        }
-
-        const isrcInput = form[`trackISRC${i}`];
-        const lyricistInput = form[`lyricist${i}`];
-        const mixingInput = form[`mixing${i}`];
-        const masteringInput = form[`mastering${i}`];
-
-        trackData.push({
-          title: titleInput.value.trim(),
-          isrc: isrcInput ? isrcInput.value.trim() : '',
-          producer: producerInput.value.trim(),
-          composer: composerInput.value.trim(),
-          lyricist: lyricistInput ? lyricistInput.value.trim() : '',
-          mixing: mixingInput ? mixingInput.value.trim() : '',
-          mastering: masteringInput ? masteringInput.value.trim() : ''
-        });
+      if (!titleInput || !titleInput.value.trim()) {
+        status.style.color = 'red';
+        status.textContent = `Please enter title for track ${i + 1}.`;
+        return;
       }
+      if (!producerInput || !producerInput.value.trim()) {
+        status.style.color = 'red';
+        status.textContent = `Please enter producer for track ${i + 1}.`;
+        return;
+      }
+      if (!composerInput || !composerInput.value.trim()) {
+        status.style.color = 'red';
+        status.textContent = `Please enter composer for track ${i + 1}.`;
+        return;
+      }
+
+      const isrcInput = form[`trackISRC${i}`];
+      const lyricistInput = form[`lyricist${i}`];
+      const mixingInput = form[`mixing${i}`];
+      const masteringInput = form[`mastering${i}`];
+
+      trackData.push({
+        title: titleInput.value.trim(),
+        isrc: isrcInput ? isrcInput.value.trim() : '',
+        producer: producerInput.value.trim(),
+        composer: composerInput.value.trim(),
+        lyricist: lyricistInput ? lyricistInput.value.trim() : '',
+        mixing: mixingInput ? mixingInput.value.trim() : '',
+        mastering: masteringInput ? masteringInput.value.trim() : ''
+      });
     }
 
     // Store selection
@@ -401,6 +405,7 @@
       form.reset();
       trackCountContainer.style.display = 'none';
       tracksContainer.innerHTML = '';
+      renderTrackForms(); // reset track form for single default
     } catch (error) {
       status.style.color = 'red';
       status.textContent = '❌ Submission failed. Please try again later.';
