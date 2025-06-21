@@ -1,124 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Silly Song Records — Submit Your Release</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root {
-      --primary-blue: #007BFF;
-      --light-blue: #e6f0ff;
-      --white: #ffffff;
-      --gray: #f4f6f8;
-      --border-gray: #ccc;
-    }
-
     body {
-      background: var(--gray);
       font-family: 'Segoe UI', sans-serif;
-      padding: 20px;
+      background: #f4f6f8;
       display: flex;
       justify-content: center;
+      padding: 20px;
     }
-
     .form-container {
-      background: var(--white);
+      background: #fff;
       padding: 30px;
       border-radius: 12px;
       max-width: 650px;
       width: 100%;
       box-shadow: 0 0 15px rgba(0,0,0,0.05);
     }
-
     .branding {
       text-align: center;
       font-size: 26px;
       font-weight: 700;
       margin-bottom: 10px;
-      color: var(--primary-blue);
+      color: #007bff;
     }
-
-    .subheader {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 14px;
-      color: #555;
-    }
-
     label {
       font-weight: 600;
-      display: block;
       margin-top: 15px;
-      margin-bottom: 5px;
-      color: #222;
+      display: block;
     }
-
     input, select {
       width: 100%;
       padding: 12px;
-      border: 1px solid var(--border-gray);
+      margin-top: 5px;
       border-radius: 8px;
+      border: 1px solid #ccc;
       box-sizing: border-box;
       font-size: 14px;
     }
-
-    input:focus, select:focus {
-      border-color: var(--primary-blue);
-      outline: none;
-      background-color: var(--light-blue);
-    }
-
-    input[type="file"] {
-      padding: 8px;
-    }
-
     button {
-      background: var(--primary-blue);
-      color: var(--white);
-      border: none;
-      padding: 14px;
-      width: 100%;
-      border-radius: 10px;
-      font-size: 16px;
       margin-top: 25px;
+      background: #007bff;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background 0.3s ease;
     }
-
     button:hover {
       background: #0056c7;
     }
-
-    .guidelines {
-      font-size: 13px;
-      background: var(--light-blue);
+    .notice {
+      margin-top: 10px;
+      background: #e6f0ff;
       padding: 10px;
-      margin-top: 8px;
-      border-left: 4px solid var(--primary-blue);
-      border-radius: 6px;
+      border-left: 4px solid #007bff;
+      font-size: 14px;
       color: #333;
+      border-radius: 6px;
     }
-
     #status {
       margin-top: 15px;
-      text-align: center;
       font-weight: 600;
-    }
-
-    .footer {
       text-align: center;
-      margin-top: 25px;
-      font-size: 13px;
-      color: #777;
     }
 
-    a {
-      color: var(--primary-blue);
-      text-decoration: none;
+    .store-checkbox-container label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: normal;
+      cursor: pointer;
     }
-
-    a:hover {
-      text-decoration: underline;
+    .store-checkbox-container input[type="checkbox"] {
+      margin-right: 6px;
+      vertical-align: middle;
     }
   </style>
 </head>
@@ -126,172 +86,133 @@
 
 <div class="form-container">
   <div class="branding">Silly Song Records</div>
-  <div class="subheader">Submit your next release below</div>
+  <form id="releaseForm">
 
-  <label for="artist">Artist Name</label>
-  <input type="text" id="artist" placeholder="Your artist name" required>
+    <label for="artist">Artist Name</label>
+    <input type="text" id="artist" name="artist" placeholder="Your artist name" required />
 
-  <label for="title">Release Title</label>
-  <input type="text" id="title" placeholder="Album or single title" required>
+    <label for="title">Release Title</label>
+    <input type="text" id="title" name="title" placeholder="Album or single title" required />
 
-  <label for="genre">Primary Genre</label>
-  <select id="genre">
-    <option>Hip-Hop/Rap</option>
-    <option>Pop</option>
-    <option>R&B/Soul</option>
-    <option>Electronic</option>
-    <option>Rock</option>
-    <option>Jazz</option>
-    <option>Country</option>
-    <option>Other</option>
-  </select>
+    <label for="genre">Primary Genre</label>
+    <select id="genre" name="genre" required>
+      <option>Hip-Hop/Rap</option>
+      <option>Pop</option>
+      <option>R&B/Soul</option>
+      <option>Electronic</option>
+      <option>Rock</option>
+      <option>Jazz</option>
+      <option>Country</option>
+      <option>Other</option>
+    </select>
 
-  <label for="email">Contact Email</label>
-  <input type="email" id="email" placeholder="you@example.com" required>
+    <label for="email">Client Email</label>
+    <input type="email" id="email" name="email" placeholder="client@example.com" required />
 
-  <label for="songFile">Upload Song (MP3/WAV)</label>
-  <input type="file" id="songFile" accept="audio/*" required>
+    <div class="notice">
+      Direct file upload is currently <strong>unavailable</strong>. Please submit your metadata below.<br />
+      You can provide file names or links in the notes or email later.
+    </div>
 
-  <label for="coverFile">Upload Cover Art (JPG or PNG only)</label>
-  <input type="file" id="coverFile" accept="image/jpeg,image/png" required>
+    <label style="margin-top: 30px;">Select Stores for Delivery</label>
+    <div class="store-checkbox-container">
+      <label><input type="checkbox" id="selectAllStores" /> <strong>Deliver to all stores (350+)</strong></label>
 
-  <div class="guidelines">
-    <strong>Cover Art Guidelines:</strong><br>
-    • Exactly <strong>3000 x 3000 pixels</strong><br>
-    • Format: <strong>JPG or PNG</strong><br>
-    • Color mode: <strong>RGB only</strong><br>
-    • No borders, text, or logos unless part of the artwork
-  </div>
+      <label><input type="checkbox" class="store-checkbox" value="Spotify" /> Spotify</label>
+      <label><input type="checkbox" class="store-checkbox" value="Apple Music" /> Apple Music</label>
+      <label><input type="checkbox" class="store-checkbox" value="YouTube Music" /> YouTube Music</label>
+      <label><input type="checkbox" class="store-checkbox" value="Amazon Music" /> Amazon Music</label>
+      <label><input type="checkbox" class="store-checkbox" value="Deezer" /> Deezer</label>
+      <label><input type="checkbox" class="store-checkbox" value="Pandora" /> Pandora</label>
+      <label><input type="checkbox" class="store-checkbox" value="TIDAL" /> TIDAL</label>
+      <label><input type="checkbox" class="store-checkbox" value="Tencent" /> Tencent Music</label>
 
-  <!-- Store selection moved here -->
-  <label style="margin-top: 30px;">Select Stores for Delivery</label>
-  <div class="guidelines">
-    <label><input type="checkbox" id="selectAllStores" onclick="toggleAllStores(this)"> <strong>Deliver to all stores (350+)</strong></label>
-    <hr style="margin: 10px 0; border: 0; border-top: 1px solid #ccc;">
-    <label><input type="checkbox" class="store-checkbox" value="Spotify"> Spotify</label><br>
-    <label><input type="checkbox" class="store-checkbox" value="Apple Music"> Apple Music</label><br>
-    <label><input type="checkbox" class="store-checkbox" value="YouTube Music"> YouTube Music</label><br>
-    <label><input type="checkbox" class="store-checkbox" value="Amazon Music"> Amazon Music</label><br>
-    <label><input type="checkbox" class="store-checkbox" value="Deezer"> Deezer</label><br>
-    <label><input type="checkbox" class="store-checkbox" value="Pandora"> Pandora</label><br>
-    <label><input type="checkbox" class="store-checkbox" value="TIDAL"> TIDAL</label><br>
-    <label><input type="checkbox" class="store-checkbox" value="Tencent"> Tencent Music</label><br>
+      <br />
+      <strong>Other Monetization (check only if fully eligible):</strong><br />
+      <label><input type="checkbox" class="store-checkbox" value="YouTube Content ID" /> YouTube Content ID</label>
+      <label><input type="checkbox" class="store-checkbox" value="Instagram/Facebook" /> Instagram / Facebook Music</label>
+      <label><input type="checkbox" class="store-checkbox" value="TikTok" /> TikTok Rights Management</label>
+      <label><input type="checkbox" class="store-checkbox" value="Audible Magic" /> Audible Magic</label>
 
-    <br><strong>Other Monetization (check only if fully eligible):</strong><br>
-    <label><input type="checkbox" class="store-checkbox" value="YouTube Content ID"> YouTube Content ID</label><br>
-    <label><input type="checkbox" class="store-checkbox" value="Instagram/Facebook"> Instagram / Facebook Music</label><br>
-    <label><input type="checkbox" class="store-checkbox" value="TikTok"> TikTok Rights Management</label><br>
-    <label><input type="checkbox" class="store-checkbox" value="Audible Magic"> Audible Magic</label><br>
+      <p style="font-size: 12px; color: #666; margin-top: 10px;">
+        <strong>Note:</strong> Only select monetization options if you own 100% of the rights and the content contains no loops, samples, or copyrighted material.
+      </p>
+    </div>
 
-    <p style="font-size: 12px; color: #666; margin-top: 10px;">
-      <strong>Note:</strong> Only select monetization options if you own 100% of the rights and the content contains no loops, samples, or copyrighted material.
-    </p>
-  </div>
-
-  <button onclick="submitForm()">Submit Release</button>
-
-  <div id="status"></div>
-
-  <div class="footer">
-    Need help? Contact us at <a href="mailto:sillysongrecords@gmail.com">sillysongrecords@gmail.com</a>
-  </div>
+    <button type="submit">Submit Release</button>
+    <div id="status"></div>
+  </form>
 </div>
 
 <script>
-  const COVER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx1QSuvp5j8ktMQjvxUo-c5o5ftWsiUn0iJtXjaL97qKWdHpFziNFDC1x1Tw6ef7A3nEw/exec';
-  const AUDIO_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyAw4snvNb9sMfhNCXMQRNMZ-gPD2HHVRMMCzFWVX4p3j3SacBsjzD25CpvmDfs4mL6BQ/exec';
+  const form = document.getElementById('releaseForm');
+  const status = document.getElementById('status');
+  const selectAllCheckbox = document.getElementById('selectAllStores');
 
-  async function submitForm() {
-    const artist = document.getElementById('artist').value.trim();
-    const title = document.getElementById('title').value.trim();
-    const genre = document.getElementById('genre').value;
-    const email = document.getElementById('email').value.trim();
-    const song = document.getElementById('songFile').files[0];
-    const cover = document.getElementById('coverFile').files[0];
-    const status = document.getElementById('status');
-    status.style.color = "black";
+  selectAllCheckbox.addEventListener('change', () => {
+    const boxes = document.querySelectorAll('.store-checkbox');
+    boxes.forEach(box => (box.checked = selectAllCheckbox.checked));
+  });
 
-    if (!artist || !title || !email || !song || !cover) {
-      status.textContent = "Please fill in all fields.";
-      status.style.color = "red";
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    status.style.color = 'black';
+    status.textContent = 'Submitting...';
+
+    // Collect form data
+    const artist = form.artist.value.trim();
+    const title = form.title.value.trim();
+    const genre = form.genre.value;
+    const email = form.email.value.trim();
+
+    if (!artist || !title || !email) {
+      status.style.color = 'red';
+      status.textContent = 'Please fill in all required fields.';
       return;
     }
 
-    if (!['image/jpeg', 'image/png'].includes(cover.type)) {
-      status.textContent = "Cover art must be JPG or PNG.";
-      status.style.color = "red";
-      return;
-    }
+    // Collect selected stores as comma-separated string
+    const stores = Array.from(document.querySelectorAll('.store-checkbox:checked'))
+      .map(cb => cb.value)
+      .join(', ') || 'None';
 
-    const imageValid = await validateImageDimensions(cover);
-    if (!imageValid) {
-      status.textContent = "Cover art must be exactly 3000x3000 pixels.";
-      status.style.color = "red";
-      return;
-    }
+    const googleFormActionURL = 'https://docs.google.com/forms/d/e/1FAIpQLSdn4T_VPXY_SlkEgMkH5LokUnFfeSDf1fvNNxqruAiLEsdcbA/formResponse';
+
+    const entryArtist = 'entry.290211190';
+    const entryTitle = 'entry.1495864895';
+    const entryGenre = 'entry.1220278759';
+    const entryEmail = 'entry.122037024';
+    const entrySongFileName = 'entry.755637783';
+    const entryCoverFileName = 'entry.1153761348';
+    const entryStores = 'entry.513215624';
+
+    const body = new URLSearchParams();
+    body.append(entryArtist, artist);
+    body.append(entryTitle, title);
+    body.append(entryGenre, genre);
+    body.append(entryEmail, email);
+    body.append(entrySongFileName, '');
+    body.append(entryCoverFileName, '');
+    body.append(entryStores, stores);
 
     try {
-      const coverPayload = {
-        title,
-        coverName: cover.name,
-        coverType: cover.type,
-        coverData: (await toBase64(cover)).split(',')[1]
-      };
-      const coverRes = await fetch(COVER_SCRIPT_URL, {
+      await fetch(googleFormActionURL, {
         method: 'POST',
-        body: JSON.stringify(coverPayload),
-        headers: { 'Content-Type': 'application/json' }
+        body: body,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        mode: 'no-cors' 
       });
-      const coverText = await coverRes.text();
-      if (!coverText.includes("Success")) throw new Error("Cover art upload failed: " + coverText);
-
-      const audioPayload = {
-        title,
-        fileName: song.name,
-        fileType: song.type,
-        fileData: (await toBase64(song)).split(',')[1]
-      };
-      const audioRes = await fetch(AUDIO_SCRIPT_URL, {
-        method: 'POST',
-        body: JSON.stringify(audioPayload),
-        headers: { 'Content-Type': 'application/json' }
-      });
-      const audioText = await audioRes.text();
-      if (!audioText.includes("Success")) throw new Error("Audio upload failed: " + audioText);
-
-      status.textContent = "✅ Release submitted successfully!";
-      status.style.color = "green";
-
-    } catch (err) {
-      status.textContent = "❌ " + err.message;
-      status.style.color = "red";
+      status.style.color = 'green';
+      status.textContent = '✅ Submission received! Thank you.';
+      form.reset();
+    } catch (error) {
+      status.style.color = 'red';
+      status.textContent = '❌ Submission failed. Please try again later.';
+      console.error(error);
     }
-  }
-
-  function toBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  }
-
-  function validateImageDimensions(file) {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => {
-        resolve(img.width === 3000 && img.height === 3000);
-      };
-      img.onerror = () => resolve(false);
-      img.src = URL.createObjectURL(file);
-    });
-  }
-
-  function toggleAllStores(masterCheckbox) {
-    const all = document.querySelectorAll('.store-checkbox');
-    all.forEach(cb => cb.checked = masterCheckbox.checked);
-  }
+  });
 </script>
 
 </body>
