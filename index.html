@@ -1,91 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Silly Song Records — Submit Your Release</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f6f8;
-      display: flex;
-      justify-content: center;
-      padding: 20px;
-    }
-    .form-container {
-      background: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      max-width: 650px;
-      width: 100%;
-      box-shadow: 0 0 15px rgba(0,0,0,0.05);
-    }
-    .branding {
-      text-align: center;
-      font-size: 26px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #007bff;
-    }
-    label {
-      font-weight: 600;
-      margin-top: 15px;
-      display: block;
-    }
-    input, select {
-      width: 100%;
-      padding: 12px;
-      margin-top: 5px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-      font-size: 14px;
-    }
-    button {
-      margin-top: 25px;
-      background: #007bff;
-      color: white;
-      border: none;
-      width: 100%;
-      padding: 14px;
-      font-size: 16px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0056c7;
-    }
-    .notice {
-      margin-top: 10px;
-      background: #e6f0ff;
-      padding: 10px;
-      border-left: 4px solid #007bff;
-      font-size: 14px;
-      color: #333;
-      border-radius: 6px;
-    }
-    #status {
-      margin-top: 15px;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    .store-checkbox-container label {
-      display: block;
-      margin-bottom: 4px;
-      font-weight: normal;
-      cursor: pointer;
-    }
-    .store-checkbox-container input[type="checkbox"] {
-      margin-right: 6px;
-      vertical-align: middle;
-    }
-  </style>
+<meta charset="UTF-8" />
+<title>Silly Song Records — Submit Your Release</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f8;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  .form-container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+  }
+  .branding {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #007bff;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+    color: #333;
+  }
+  label {
+    font-weight: 600;
+    margin-top: 15px;
+    display: block;
+  }
+  input, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  button {
+    margin-top: 25px;
+    background: #007bff;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #0056c7;
+  }
+  .notice {
+    margin-top: 10px;
+    background: #e6f0ff;
+    padding: 10px;
+    border-left: 4px solid #007bff;
+    font-size: 14px;
+    color: #333;
+    border-radius: 6px;
+  }
+  #status {
+    margin-top: 15px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .store-checkbox-container label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: normal;
+    cursor: pointer;
+  }
+  .store-checkbox-container input[type="checkbox"] {
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  /* Fix Select All checkbox vertical align */
+  #selectAllStores {
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  /* Track metadata container */
+  .track-metadata {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    background: #fafafa;
+  }
+  .track-metadata h3 {
+    margin: 0 0 10px 0;
+    font-weight: 700;
+    font-size: 18px;
+    color: #007bff;
+  }
+  .track-metadata label {
+    font-weight: 600;
+  }
+  .track-metadata input {
+    margin-top: 5px;
+  }
+  .small-input {
+    width: 150px;
+  }
+</style>
 </head>
 <body>
 
 <div class="form-container">
   <div class="branding">Silly Song Records</div>
+  <h2>Submit Release</h2>
   <form id="releaseForm">
 
     <label for="artist">Artist Name</label>
@@ -93,6 +127,20 @@
 
     <label for="title">Release Title</label>
     <input type="text" id="title" name="title" placeholder="Album or single title" required />
+
+    <label for="releaseType">Release Type</label>
+    <select id="releaseType" name="releaseType" required>
+      <option value="Single">Single</option>
+      <option value="EP">EP</option>
+      <option value="Album">Album</option>
+    </select>
+
+    <div id="trackCountContainer" style="display:none;">
+      <label for="trackCount">Number of Tracks (1-30)</label>
+      <input type="number" id="trackCount" name="trackCount" min="1" max="30" value="1" />
+    </div>
+
+    <div id="tracksContainer"></div>
 
     <label for="genre">Primary Genre</label>
     <select id="genre" name="genre" required>
@@ -145,10 +193,65 @@
 </div>
 
 <script>
+  const releaseType = document.getElementById('releaseType');
+  const trackCountContainer = document.getElementById('trackCountContainer');
+  const trackCountInput = document.getElementById('trackCount');
+  const tracksContainer = document.getElementById('tracksContainer');
+  const selectAllCheckbox = document.getElementById('selectAllStores');
   const form = document.getElementById('releaseForm');
   const status = document.getElementById('status');
-  const selectAllCheckbox = document.getElementById('selectAllStores');
 
+  function createTrackForm(index) {
+    const div = document.createElement('div');
+    div.className = 'track-metadata';
+    div.innerHTML = `
+      <h3>Track ${index + 1}</h3>
+      <label for="trackTitle${index}">Track Title</label>
+      <input type="text" id="trackTitle${index}" name="trackTitle${index}" placeholder="Title of track ${index + 1}" required />
+      <label for="trackISRC${index}" style="margin-top: 10px;">
+        Existing ISRC Code (optional)
+        <small style="font-weight: normal; color: #666; display: block; margin-top: 2px;">
+          If you don't have one, we'll generate it for you.
+        </small>
+      </label>
+      <input type="text" id="trackISRC${index}" name="trackISRC${index}" placeholder="e.g. US-XXX-99-12345" />
+    `;
+    return div;
+  }
+
+  function renderTrackForms() {
+    const count = parseInt(trackCountInput.value, 10);
+    if (isNaN(count) || count < 1 || count > 30) {
+      tracksContainer.innerHTML = '';
+      return;
+    }
+    tracksContainer.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+      tracksContainer.appendChild(createTrackForm(i));
+    }
+  }
+
+  releaseType.addEventListener('change', () => {
+    if (releaseType.value === 'EP' || releaseType.value === 'Album') {
+      trackCountContainer.style.display = 'block';
+      renderTrackForms();
+    } else {
+      trackCountContainer.style.display = 'none';
+      tracksContainer.innerHTML = '';
+    }
+  });
+
+  trackCountInput.addEventListener('input', () => {
+    renderTrackForms();
+  });
+
+  // Initialize form for default selection
+  if (releaseType.value === 'EP' || releaseType.value === 'Album') {
+    trackCountContainer.style.display = 'block';
+    renderTrackForms();
+  }
+
+  // Store selection logic
   selectAllCheckbox.addEventListener('change', () => {
     const boxes = document.querySelectorAll('.store-checkbox');
     boxes.forEach(box => (box.checked = selectAllCheckbox.checked));
@@ -159,11 +262,12 @@
     status.style.color = 'black';
     status.textContent = 'Submitting...';
 
-    // Collect form data
+    // Basic required field checks
     const artist = form.artist.value.trim();
     const title = form.title.value.trim();
     const genre = form.genre.value;
     const email = form.email.value.trim();
+    const releaseTypeVal = releaseType.value;
 
     if (!artist || !title || !email) {
       status.style.color = 'red';
@@ -171,20 +275,59 @@
       return;
     }
 
-    // Collect selected stores as comma-separated string
-    const stores = Array.from(document.querySelectorAll('.store-checkbox:checked'))
-      .map(cb => cb.value)
-      .join(', ') || 'None';
+    // Validate tracks if EP or Album
+    let trackData = [];
+    if (releaseTypeVal === 'EP' || releaseTypeVal === 'Album') {
+      const count = parseInt(trackCountInput.value, 10);
+      if (isNaN(count) || count < 1 || count > 30) {
+        status.style.color = 'red';
+        status.textContent = 'Please enter a valid number of tracks (1-30).';
+        return;
+      }
+      for (let i = 0; i < count; i++) {
+        const titleInput = form[`trackTitle${i}`];
+        if (!titleInput || !titleInput.value.trim()) {
+          status.style.color = 'red';
+          status.textContent = `Please enter title for track ${i + 1}.`;
+          return;
+        }
+        const isrcInput = form[`trackISRC${i}`];
+        trackData.push({
+          title: titleInput.value.trim(),
+          isrc: isrcInput ? isrcInput.value.trim() : ''
+        });
+      }
+    }
 
+    // Store selection
+    let stores = '';
+    if (selectAllCheckbox.checked) {
+      stores = 'All';
+    } else {
+      const selectedStores = Array.from(document.querySelectorAll('.store-checkbox:checked'))
+        .map(cb => cb.value);
+      stores = selectedStores.length > 0 ? selectedStores.join(', ') : 'None';
+    }
+
+    // Google Form URL and entry IDs - update with your actual form details if needed
     const googleFormActionURL = 'https://docs.google.com/forms/d/e/1FAIpQLSdn4T_VPXY_SlkEgMkH5LokUnFfeSDf1fvNNxqruAiLEsdcbA/formResponse';
 
     const entryArtist = 'entry.290211190';
     const entryTitle = 'entry.1495864895';
     const entryGenre = 'entry.1220278759';
     const entryEmail = 'entry.122037024';
-    const entrySongFileName = 'entry.755637783';
-    const entryCoverFileName = 'entry.1153761348';
+    const entrySongFileName = 'entry.755637783'; // empty since no file upload yet
+    const entryCoverFileName = 'entry.1153761348'; // empty since no file upload yet
     const entryStores = 'entry.513215624';
+
+    // For track metadata, combine all track info into one text block
+    // Replace with your actual Google Form entry ID for track metadata or remove if unused
+    const entryTrackMetadata = 'entry.9999999999';
+
+    let trackMetadataStr = '';
+    if (trackData.length) {
+      trackMetadataStr = trackData.map((t, i) => `Track ${i+1}: Title="${t.title}", ISRC="${t.isrc || 'N/A'}"`).join(' | ');
+    }
 
     const body = new URLSearchParams();
     body.append(entryArtist, artist);
@@ -194,6 +337,9 @@
     body.append(entrySongFileName, '');
     body.append(entryCoverFileName, '');
     body.append(entryStores, stores);
+    if (trackMetadataStr) {
+      body.append(entryTrackMetadata, trackMetadataStr);
+    }
 
     try {
       await fetch(googleFormActionURL, {
@@ -202,11 +348,13 @@
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        mode: 'no-cors' 
+        mode: 'no-cors'
       });
       status.style.color = 'green';
       status.textContent = '✅ Submission received! Thank you.';
       form.reset();
+      trackCountContainer.style.display = 'none';
+      tracksContainer.innerHTML = '';
     } catch (error) {
       status.style.color = 'red';
       status.textContent = '❌ Submission failed. Please try again later.';
