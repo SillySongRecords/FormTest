@@ -113,6 +113,9 @@
   .small-input {
     width: 150px;
   }
+  .credits-group label {
+    margin-top: 10px;
+  }
 </style>
 </head>
 <body>
@@ -208,6 +211,7 @@
       <h3>Track ${index + 1}</h3>
       <label for="trackTitle${index}">Track Title</label>
       <input type="text" id="trackTitle${index}" name="trackTitle${index}" placeholder="Title of track ${index + 1}" required />
+      
       <label for="trackISRC${index}" style="margin-top: 10px;">
         Existing ISRC Code (optional)
         <small style="font-weight: normal; color: #666; display: block; margin-top: 2px;">
@@ -215,6 +219,23 @@
         </small>
       </label>
       <input type="text" id="trackISRC${index}" name="trackISRC${index}" placeholder="e.g. US-XXX-99-12345" />
+      
+      <div class="credits-group">
+        <label for="producer${index}" style="margin-top: 15px;">Producer <span style="color:red;">*</span></label>
+        <input type="text" id="producer${index}" name="producer${index}" placeholder="Producer name" required />
+        
+        <label for="composer${index}" style="margin-top: 10px;">Composer <span style="color:red;">*</span></label>
+        <input type="text" id="composer${index}" name="composer${index}" placeholder="Composer name" required />
+        
+        <label for="lyricist${index}" style="margin-top: 10px;">Lyricist (optional)</label>
+        <input type="text" id="lyricist${index}" name="lyricist${index}" placeholder="Lyricist name" />
+        
+        <label for="mixing${index}" style="margin-top: 10px;">Mixing Engineer (optional)</label>
+        <input type="text" id="mixing${index}" name="mixing${index}" placeholder="Mixing engineer name" />
+        
+        <label for="mastering${index}" style="margin-top: 10px;">Mastering Engineer (optional)</label>
+        <input type="text" id="mastering${index}" name="mastering${index}" placeholder="Mastering engineer name" />
+      </div>
     `;
     return div;
   }
@@ -286,15 +307,38 @@
       }
       for (let i = 0; i < count; i++) {
         const titleInput = form[`trackTitle${i}`];
+        const producerInput = form[`producer${i}`];
+        const composerInput = form[`composer${i}`];
+
         if (!titleInput || !titleInput.value.trim()) {
           status.style.color = 'red';
           status.textContent = `Please enter title for track ${i + 1}.`;
           return;
         }
+        if (!producerInput || !producerInput.value.trim()) {
+          status.style.color = 'red';
+          status.textContent = `Please enter producer for track ${i + 1}.`;
+          return;
+        }
+        if (!composerInput || !composerInput.value.trim()) {
+          status.style.color = 'red';
+          status.textContent = `Please enter composer for track ${i + 1}.`;
+          return;
+        }
+
         const isrcInput = form[`trackISRC${i}`];
+        const lyricistInput = form[`lyricist${i}`];
+        const mixingInput = form[`mixing${i}`];
+        const masteringInput = form[`mastering${i}`];
+
         trackData.push({
           title: titleInput.value.trim(),
-          isrc: isrcInput ? isrcInput.value.trim() : ''
+          isrc: isrcInput ? isrcInput.value.trim() : '',
+          producer: producerInput.value.trim(),
+          composer: composerInput.value.trim(),
+          lyricist: lyricistInput ? lyricistInput.value.trim() : '',
+          mixing: mixingInput ? mixingInput.value.trim() : '',
+          mastering: masteringInput ? masteringInput.value.trim() : ''
         });
       }
     }
@@ -326,7 +370,9 @@
 
     let trackMetadataStr = '';
     if (trackData.length) {
-      trackMetadataStr = trackData.map((t, i) => `Track ${i+1}: Title="${t.title}", ISRC="${t.isrc || 'N/A'}"`).join(' | ');
+      trackMetadataStr = trackData.map((t, i) => {
+        return `Track ${i+1}: Title="${t.title}", ISRC="${t.isrc || 'N/A'}", Producer="${t.producer}", Composer="${t.composer}", Lyricist="${t.lyricist || 'N/A'}", Mixing="${t.mixing || 'N/A'}", Mastering="${t.mastering || 'N/A'}"`;
+      }).join(' | ');
     }
 
     const body = new URLSearchParams();
