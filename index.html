@@ -1,76 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Submit Release - Silly Song Records</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f2f9ff; padding: 20px; }
-    .container { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
-    h1 { color: #007bff; text-align: center; }
-    label { display: block; margin-top: 15px; font-weight: bold; }
-    input, select { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
-    button { margin-top: 20px; background: #007bff; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; width: 100%; font-size: 16px; }
-    button:hover { background: #0056b3; }
-    .notice { background: #e6f0ff; padding: 10px; margin-top: 10px; border-left: 4px solid #007bff; font-size: 14px; }
-  </style>
+<meta charset="UTF-8" />
+<title>Silly Song Records — Submit Your Release</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f8;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  .form-container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+  }
+  .branding {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #007bff;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+    color: #333;
+  }
+  label {
+    font-weight: 600;
+    margin-top: 15px;
+    display: block;
+  }
+  input, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  button {
+    margin-top: 25px;
+    background: #007bff;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #0056c7;
+  }
+  .notice {
+    margin-top: 10px;
+    background: #e6f0ff;
+    padding: 10px;
+    border-left: 4px solid #007bff;
+    font-size: 14px;
+    color: #333;
+    border-radius: 6px;
+  }
+  #status {
+    margin-top: 15px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .store-checkbox-container label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: normal;
+    cursor: pointer;
+  }
+  .store-checkbox-container input[type="checkbox"] {
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  #selectAllStores {
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  .track-metadata {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    background: #fafafa;
+  }
+  .track-metadata h3 {
+    margin: 0 0 10px 0;
+    font-weight: 700;
+    font-size: 18px;
+    color: #007bff;
+  }
+  .track-metadata label {
+    font-weight: 600;
+  }
+  .track-metadata input {
+    margin-top: 5px;
+  }
+  .small-input {
+    width: 150px;
+  }
+  .credits-group label {
+    margin-top: 10px;
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Submit Release</h1>
-    <form id="releaseForm"
-          action="https://docs.google.com/forms/d/e/1FAIpQLSdn4T_VPXY_SlkEgMkH5LokUnFfeSDf1fvNNxqruAiLEsdcbA/formResponse"
-          method="POST" target="hidden_iframe">
 
-      <label for="artist">Artist Name</label>
-      <input type="text" id="artist" required />
+<div class="form-container">
+  <div class="branding">Silly Song Records</div>
+  <h2>Submit Release</h2>
+  <form id="releaseForm">
 
-      <label for="title">Release Title</label>
-      <input type="text" id="title" required />
+    <label for="artist">Artist Name</label>
+    <input type="text" id="artist" name="artist" required />
 
-      <label for="genre">Primary Genre</label>
-      <input type="text" id="genre" required />
+    <label for="title">Release Title</label>
+    <input type="text" id="title" name="title" required />
 
-      <label for="email">Client Email</label>
-      <input type="email" id="email" required />
+    <label for="releaseType">Release Type</label>
+    <select id="releaseType" name="releaseType" required>
+      <option value="Single">Single</option>
+      <option value="EP">EP</option>
+      <option value="Album">Album</option>
+    </select>
 
-      <label for="stores">Stores</label>
-      <input type="text" id="stores" placeholder="e.g. All or Spotify, Apple Music..." />
+    <div id="trackCountContainer" style="display:none;">
+      <label for="trackCount">Number of Tracks (1-30)</label>
+      <input type="number" id="trackCount" name="trackCount" min="1" max="30" value="1" />
+    </div>
 
-      <label for="trackdata">Track Metadata</label>
-      <textarea id="trackdata" rows="4" placeholder="Track 1: title=..., ISRC=..., Producer=..., etc."></textarea>
+    <div id="tracksContainer"></div>
 
-      <div class="notice">Direct file upload is currently unavailable. You may provide filenames or links separately.</div>
+    <label for="genre">Primary Genre</label>
+    <select id="genre" name="genre" required>
+      <option>Hip-Hop/Rap</option>
+      <option>Pop</option>
+      <option>R&B/Soul</option>
+      <option>Electronic</option>
+      <option>Rock</option>
+      <option>Jazz</option>
+      <option>Country</option>
+      <option>Other</option>
+    </select>
 
-      <!-- Hidden inputs mapped to Google Form entry IDs -->
-      <input type="hidden" name="entry.290211190" id="entryArtist">
-      <input type="hidden" name="entry.1495864895" id="entryTitle">
-      <input type="hidden" name="entry.1220278759" id="entryGenre">
-      <input type="hidden" name="entry.122037024" id="entryEmail">
-      <input type="hidden" name="entry.755637783" id="entrySongFile">
-      <input type="hidden" name="entry.1153761348" id="entryCoverFile">
-      <input type="hidden" name="entry.513215624" id="entryStores">
-      <input type="hidden" name="entry.9999999999" id="entryTrackData">
+    <label for="email">Client Email</label>
+    <input type="email" id="email" name="email" required />
 
-      <button type="submit">Submit Release</button>
-      <iframe name="hidden_iframe" style="display:none;"></iframe>
-    </form>
+    <div class="notice">
+      Direct file upload is currently <strong>unavailable</strong>.<br />
+      Please email your WAV/MP3 and Cover Art separately after submission.
+    </div>
+
+    <label style="margin-top: 30px;">Select Stores for Delivery</label>
+    <div class="store-checkbox-container">
+      <label><input type="checkbox" id="selectAllStores" /> <strong>Deliver to all stores (350+)</strong></label>
+      <label><input type="checkbox" class="store-checkbox" value="Spotify" /> Spotify</label>
+      <label><input type="checkbox" class="store-checkbox" value="Apple Music" /> Apple Music</label>
+      <label><input type="checkbox" class="store-checkbox" value="YouTube Music" /> YouTube Music</label>
+      <label><input type="checkbox" class="store-checkbox" value="Amazon Music" /> Amazon Music</label>
+      <label><input type="checkbox" class="store-checkbox" value="Deezer" /> Deezer</label>
+      <label><input type="checkbox" class="store-checkbox" value="Pandora" /> Pandora</label>
+      <label><input type="checkbox" class="store-checkbox" value="TIDAL" /> TIDAL</label>
+      <label><input type="checkbox" class="store-checkbox" value="Tencent Music" /> Tencent Music</label>
+      <br />
+      <strong>Other Monetization (check only if fully eligible):</strong><br />
+      <label><input type="checkbox" class="store-checkbox" value="YouTube Content ID" /> YouTube Content ID</label>
+      <label><input type="checkbox" class="store-checkbox" value="Instagram/Facebook" /> Instagram / Facebook</label>
+      <label><input type="checkbox" class="store-checkbox" value="TikTok Rights" /> TikTok Rights</label>
+      <label><input type="checkbox" class="store-checkbox" value="Audible Magic" /> Audible Magic</label>
+      <p style="font-size: 12px; color: #666;">
+        Note: Only select monetization options if you own 100% of the rights and no samples/loops are used.
+      </p>
+    </div>
+
+    <button type="submit">Submit Release</button>
     <div id="status"></div>
-  </div>
+  </form>
+</div>
 
-  <script>
-    const form = document.getElementById('releaseForm');
+<script>
+const releaseType = document.getElementById('releaseType');
+const trackCountContainer = document.getElementById('trackCountContainer');
+const trackCountInput = document.getElementById('trackCount');
+const tracksContainer = document.getElementById('tracksContainer');
+const selectAllCheckbox = document.getElementById('selectAllStores');
+const form = document.getElementById('releaseForm');
+const status = document.getElementById('status');
 
-    form.addEventListener('submit', () => {
-      document.getElementById('entryArtist').value = document.getElementById('artist').value.trim();
-      document.getElementById('entryTitle').value = document.getElementById('title').value.trim();
-      document.getElementById('entryGenre').value = document.getElementById('genre').value.trim();
-      document.getElementById('entryEmail').value = document.getElementById('email').value.trim();
-      document.getElementById('entrySongFile').value = ''; // optional placeholder
-      document.getElementById('entryCoverFile').value = ''; // optional placeholder
-      document.getElementById('entryStores').value = document.getElementById('stores').value.trim();
-      document.getElementById('entryTrackData').value = document.getElementById('trackdata').value.trim();
+function createTrackForm(index) {
+  const div = document.createElement('div');
+  div.className = 'track-metadata';
+  div.innerHTML = `
+    <h3>Track ${index + 1}</h3>
+    <label>Track Title</label>
+    <input type="text" name="trackTitle${index}" required />
+    <label>ISRC (optional)</label>
+    <input type="text" name="trackISRC${index}" placeholder="Leave blank to auto-generate" />
+    <div class="credits-group">
+      <label>Producer *</label>
+      <input type="text" name="producer${index}" required />
+      <label>Composer *</label>
+      <input type="text" name="composer${index}" required />
+      <label>Lyricist (optional)</label>
+      <input type="text" name="lyricist${index}" />
+      <label>Mixing Engineer (optional)</label>
+      <input type="text" name="mixing${index}" />
+      <label>Mastering Engineer (optional)</label>
+      <input type="text" name="mastering${index}" />
+    </div>
+  `;
+  return div;
+}
+
+function renderTrackForms() {
+  let count = releaseType.value === 'Single' ? 1 : parseInt(trackCountInput.value || '1', 10);
+  if (releaseType.value !== 'Single') {
+    trackCountContainer.style.display = 'block';
+  } else {
+    trackCountContainer.style.display = 'none';
+  }
+  tracksContainer.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    tracksContainer.appendChild(createTrackForm(i));
+  }
+}
+
+releaseType.addEventListener('change', renderTrackForms);
+trackCountInput.addEventListener('input', renderTrackForms);
+renderTrackForms();
+
+selectAllCheckbox.addEventListener('change', () => {
+  document.querySelectorAll('.store-checkbox').forEach(cb => {
+    cb.checked = selectAllCheckbox.checked;
+  });
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  status.textContent = 'Submitting...';
+
+  const artist = form.artist.value;
+  const title = form.title.value;
+  const genre = form.genre.value;
+  const email = form.email.value;
+
+  const selectedStores = selectAllCheckbox.checked
+    ? 'All'
+    : Array.from(document.querySelectorAll('.store-checkbox:checked')).map(cb => cb.value).join(', ');
+
+  let trackInfo = '';
+  const trackCount = releaseType.value === 'Single' ? 1 : parseInt(trackCountInput.value || '1', 10);
+  for (let i = 0; i < trackCount; i++) {
+    const t = form[`trackTitle${i}`]?.value || '';
+    const isrc = form[`trackISRC${i}`]?.value || 'N/A';
+    const producer = form[`producer${i}`]?.value || '';
+    const composer = form[`composer${i}`]?.value || '';
+    const lyricist = form[`lyricist${i}`]?.value || 'N/A';
+    const mixing = form[`mixing${i}`]?.value || 'N/A';
+    const mastering = form[`mastering${i}`]?.value || 'N/A';
+    trackInfo += `Track ${i + 1}: ${t}, ISRC: ${isrc}, Producer: ${producer}, Composer: ${composer}, Lyricist: ${lyricist}, Mixing: ${mixing}, Mastering: ${mastering} | `;
+  }
+
+  const formData = new URLSearchParams();
+  formData.append('entry.290211190', artist);
+  formData.append('entry.1495864895', title);
+  formData.append('entry.1220278759', genre);
+  formData.append('entry.122037024', email);
+  formData.append('entry.755637783', '');
+  formData.append('entry.1153761348', '');
+  formData.append('entry.513215624', selectedStores);
+  formData.append('entry.9999999999', trackInfo);
+
+  try {
+    await fetch('https://docs.google.com/forms/d/e/1FAIpQLSdn4T_VPXY_SlkEgMkH5LokUnFfeSDf1fvNNxqruAiLEsdcbA/formResponse', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      mode: 'no-cors',
     });
-  </script>
+    status.style.color = 'green';
+    status.textContent = '✅ Release submitted! We’ll follow up soon.';
+    form.reset();
+    renderTrackForms();
+  } catch (err) {
+    console.error(err);
+    status.style.color = 'red';
+    status.textContent = '❌ Submission failed. Try again later.';
+  }
+});
+</script>
+
 </body>
 </html>
